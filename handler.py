@@ -59,7 +59,23 @@ class UNet(BaseHandler):
                     img_tiles.append(img_tile)
 
         return img_tiles
+    def load_images(self, data):
+        images = []
 
+        for row in data:
+            # Compat layer: normally the envelope should just return the data
+            # directly, but older versions of Torchserve didn't have envelope.
+            image = row.get("data") or row.get("body")
+            if isinstance(image, str):
+                # if the image is a string of bytesarray.
+                image = base64.b64decode(image)
+
+            # the image is sent as bytesarray
+            image = Image.open(io.BytesIO(image))
+            images.append(image)
+
+        return images
+    
     def extract_output(model, data_path, save_path, device="cuda"):
         import torch.nn.functional as F
         model.eval()
@@ -119,7 +135,8 @@ class UNet(BaseHandler):
         return repatched_image
 
     def handle(self, data, context):
-
+        data = self.load_images(data )
+        
         model_input = self.preprocess(data)
 
         model_output = self.inference(model_input)
