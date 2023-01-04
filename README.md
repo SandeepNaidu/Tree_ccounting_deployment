@@ -11,3 +11,13 @@ torchserve --start --model-store ./models --models UNet=UNet.mar
 #for  inference
 
 curl http://localhost:8080/predictions/UNet -T 71.jpg.JPG -o ouput.jpg
+
+#checkpoint location in drive 
+
+GET_AWS_DATA>UNet_results > saved outPuts > 0_checkpoint.pt
+
+#My reference to write handler 
+
+https://www.pento.ai/blog/custom-torchserve-handlers
+
+https://gist.github.com/SrGrace/05e83d17825b0ef43cd4adc2f616027a
