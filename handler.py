@@ -86,18 +86,22 @@ class UNet(BaseHandler):
         return img_append
 
     def preprocess(self, image):
+        print("preprocesed")
         img_tiles = self.split_image(image, 512)
         # extraction_set = Dataset_loader(img_tiles)
         # extraction_loader = DataLoader(
         # extraction_set, batch_size=16, shuffle=False, num_workers=2)
-
+        print("preprocesed")
         return img_tiles
 
     def inference(self, model_input):
+        extraction_set = Dataset_loader(model_input)
+        extraction_loader = DataLoader(
+            extraction_set, batch_size=16, shuffle=False, num_workers=2)
 
         appended_image = self.extract_output(
-            self.model, model_input, save_path=None, device=self.device)
-
+            self.model, extraction_loader, save_path=None, device=self.device)
+        print("inferenced")
         return appended_image
 
     def repatch_image(appended_img, split_count):
@@ -111,6 +115,7 @@ class UNet(BaseHandler):
         img_width = image.shape[1]
 
         repatched_image = self.repatch_image(output, img_height // TARGET_SIZE)
+        print("postprocesed")
         return repatched_image
 
     def handle(self, data, context):
