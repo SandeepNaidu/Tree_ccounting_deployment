@@ -29,7 +29,7 @@ from extrafiles import DoubleConv
 
 
 class UNet(nn.Module):
-    def __init__(self, in_channels, out_channels, features=[64, 128, 256, 512],
+    def __init__(self, in_channels=3, out_channels=2, features=[64, 128, 256, 512],
                  rates=(1, 1, 1, 1)):
         super(UNet, self).__init__()
         self.down_part = nn.ModuleList()
