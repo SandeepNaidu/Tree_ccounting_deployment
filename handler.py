@@ -9,11 +9,11 @@ from PIL import Image
 from torchvision.transforms import Compose
 from ts.torch_handler.base_handler import BaseHandler
 from extrafiles import Dataset_loader
-from model import UNet
+from model import Unet
 # from preprocessing import  split_image
 
 
-class UNet_handler(BaseHandler):
+class Unethandler(BaseHandler):
 
     def __init__(self):
         self._context = None
@@ -43,7 +43,7 @@ class UNet_handler(BaseHandler):
         if not os.path.isfile(model_pt_path):
             raise RuntimeError("Missing the model.pt file")
 
-        self.model = UNet(3, 2)
+        self.model = Unet(3, 2)
         self.model.model.load_state_dict(
             torch.load(model_dir + '0_checkpoint.pt'))
 
@@ -145,5 +145,6 @@ class UNet_handler(BaseHandler):
 
         model_output = self.postprocess(data, model_output, 512)
 
-        cv2.imwrite('reult.png', model_output)
+        # cv2.imwrite('reult.png', model_output)
+
         return model_output
