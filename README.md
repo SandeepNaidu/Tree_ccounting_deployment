@@ -1,4 +1,6 @@
 # Tree_ccounting_deployment
+
+
 # checkpoint in aws
 
 s3://aws-labeling/Tree_counting/0_checkpoint.pt
@@ -14,6 +16,10 @@ torchserve --start --model-store ./models --models UNet=UNet.mar
 #for  inference
 
 curl http://localhost:8080/predictions/UNet -T 71.jpg.JPG -o ouput.jpg
+
+#source code
+
+https://colab.research.google.com/drive/19DCJupRUivKyyL4ZZkJnj2KHdopXlwAP?usp=share_link
 
 #checkpoint location in drive 
 
