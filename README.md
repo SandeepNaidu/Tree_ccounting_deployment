@@ -1,4 +1,7 @@
 # Tree_ccounting_deployment
+# checkpoint in aws
+
+s3://aws-labeling/Tree_counting/0_checkpoint.pt
 
 #for mar file generation
 
