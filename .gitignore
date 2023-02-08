@@ -1,3 +1,6 @@
-model-store
-logs
+model-store/*
+logs/*
 __pycache__
+*.pt
+*.pth
+.DS_Store

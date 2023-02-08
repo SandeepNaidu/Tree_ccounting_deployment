@@ -2,7 +2,7 @@
 
 
 # checkpoint in aws
-
+Copy the following file to the project folder
 s3://aws-labeling/Tree_counting/0_checkpoint.pt
 
 # for mar file generation

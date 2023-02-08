@@ -28,10 +28,10 @@ from skimage import io
 from extrafiles import DoubleConv
 
 
-class Unet(nn.Module):
+class UNet(nn.Module):
     def __init__(self, in_channels=3, out_channels=2, features=[64, 128, 256, 512],
                  rates=(1, 1, 1, 1)):
-        super(Unet, self).__init__()
+        super(UNet, self).__init__()
         self.down_part = nn.ModuleList()
         self.up_part = nn.ModuleList()
         self.pool = nn.MaxPool2d(kernel_size=2, stride=2)

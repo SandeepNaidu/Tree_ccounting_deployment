@@ -9,11 +9,11 @@ from PIL import Image
 from torchvision.transforms import Compose
 from ts.torch_handler.base_handler import BaseHandler
 from extrafiles import Dataset_loader
-from model import Unet
+from model import UNet
 # from preprocessing import  split_image
 
 
-class Unethandler(BaseHandler):
+class UNethandler(BaseHandler):
 
     def __init__(self):
         self._context = None
@@ -33,6 +33,7 @@ class Unethandler(BaseHandler):
 
         properties = context.system_properties
         model_dir = properties.get("model_dir")
+        print("model_dir = ", model_dir)
         self.device = torch.device(
             "cuda:" + str(properties.get("gpu_id")) if torch.cuda.is_available() else "cpu")
 
@@ -42,9 +43,12 @@ class Unethandler(BaseHandler):
 
         if not os.path.isfile(model_pt_path):
             raise RuntimeError("Missing the model.pt file")
+        else:
+            print("model_pt_path = ", model_pt_path)
 
-        self.model = Unet(3, 2)
-        self.model.model.load_state_dict(
+        self.model = UNet(3, 2)
+        # https://stackoverflow.com/questions/67000060/loading-model-failed-in-torchserving
+        self.model.load_state_dict(
             torch.load(model_dir + '0_checkpoint.pt'))
 
         self.initialized = True
@@ -139,10 +143,13 @@ class Unethandler(BaseHandler):
 
         data = self.load_images(data)
 
+        print("PREPROCESS...")
         model_input = self.preprocess(data)
 
+        print("INFERENCE...")
         model_output = self.inference(model_input)
 
+        print("POSTPROCESS....")
         model_output = self.postprocess(data, model_output, 512)
 
         # cv2.imwrite('reult.png', model_output)
